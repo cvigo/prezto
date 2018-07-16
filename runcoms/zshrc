@@ -38,3 +38,12 @@ export PATH=$PATH:~/developer/linux-scripts
 
 #jmeter 
 export PATH=$PATH:/Applications/apache-jmeter-4.0/bin/
+
+# coreutils with standard names (not starting by 'g')
+export PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
+
+#titan_cli
+export PATH=$PATH:~/developer/BBVA/DBaaS/titan/titan_cli/bin
+
+#zsh-completion installed by Homebrew
+fpath=(/usr/local/share/zsh-completions $fpath)
