@@ -47,3 +47,21 @@ export PATH=$PATH:~/developer/BBVA/DBaaS/titan/titan_cli/bin
 
 #zsh-completion installed by Homebrew
 fpath=(/usr/local/share/zsh-completions $fpath)
+
+#Titan CLI autocomplete
+source /Users/carlosvigo/developer/BBVA/DBaaS/titan/titan_cli/autocomplete/zsh/_titan_cli
+
+#Set Java default version
+export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+
+
+# add this configuration to ~/.zshrc
+export HISTFILE=~/.zsh_history  # ensure history file visibility
+setopt    appendhistory     #Append history to the history file (no overwriting)
+setopt    no_share_history
+unsetopt  share_history
+setopt    incappendhistory  #Immediately append to the history file, not just when a term is killed
+
+export HH_CONFIG=hicolor        # get more colors
+bindkey -s "\C-r" "\eqhh\n"     # bind hh to Ctrl-r (for Vi mode check doc)
+
