@@ -49,6 +49,7 @@ fpath=(/usr/local/share/zsh-completions $fpath)
 
 #Titan CLI autocomplete
 source /Users/carlosvigo/developer/BBVA/connectors/titan_cli/autocomplete/zsh/_titan_cli
+alias tc=titan_cli
 
 #Set Java default version
 export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
@@ -67,3 +68,7 @@ bindkey -s "\C-r" "\eqhh\n"     # bind hh to Ctrl-r (for Vi mode check doc)
 export CLICOLOR=1
 export LSCOLORS=ExFxCxDxBxegedabagacad
 alias ls="ls --color=always"
+
+# Ether Console stuff
+export ECS_CLI_KEY=/Users/carlosvigo/.ssh/e019682-work_key.pem 
+export ECS_CLI_CERT=/Users/carlosvigo/.ssh/e019682-work_cert.pem
