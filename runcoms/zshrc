@@ -13,8 +13,6 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
-<<<<<<< Updated upstream
-=======
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
@@ -88,4 +86,3 @@ export GOPRIVATE='*.bbva.com,*.igrupobbva'
 
 #Android Tools
 export PATH=$HOME/developer/android/:$PATH
->>>>>>> Stashed changes
