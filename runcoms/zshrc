@@ -13,6 +13,8 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+<<<<<<< Updated upstream
+=======
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
@@ -48,11 +50,11 @@ export PATH=$PATH:~/developer/BBVA/connectors/titan_cli/bin
 fpath=(/usr/local/share/zsh-completions $fpath)
 
 #Titan CLI autocomplete
-source /Users/carlosvigo/developer/BBVA/connectors/titan_cli/autocomplete/zsh/_titan_cli
+source ~/.titan_cli/_titan_cli
 alias tc=titan_cli
 
 #Set Java default version
-export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+export JAVA_HOME='/usr/libexec/java_home -v 1.8'
 
 
 # add this configuration to ~/.zshrc
@@ -72,3 +74,18 @@ alias ls="ls --color=always"
 # Ether Console stuff
 export ECS_CLI_KEY=/Users/carlosvigo/.ssh/e019682-work_key.pem 
 export ECS_CLI_CERT=/Users/carlosvigo/.ssh/e019682-work_cert.pem
+
+#drivers DB2
+if [ -f '/Applications/dsdriver/db2profile' ]; then source '/Applications/dsdriver/db2profile'; fi
+export DB2HOME=/Applications/dsdriver
+export CGO_CFLAGS=-I$DB2HOME/include
+export CGO_LDFLAGS=-L$DB2HOME/lib 
+export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:$DB2HOME/dsdriver/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$DB2HOME/dsdriver/lib
+
+#para que go mod no vaya por el proxy de Google
+export GOPRIVATE='*.bbva.com,*.igrupobbva'
+
+#Android Tools
+export PATH=$HOME/developer/android/:$PATH
+>>>>>>> Stashed changes
