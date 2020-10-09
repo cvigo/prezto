@@ -70,8 +70,8 @@ export LSCOLORS=ExFxCxDxBxegedabagacad
 alias ls="ls --color=always"
 
 # Ether Console stuff
-export ECS_CLI_KEY=/Users/carlosvigo/.ssh/e019682-work_key.pem 
-export ECS_CLI_CERT=/Users/carlosvigo/.ssh/e019682-work_cert.pem
+export ECS_CLI_KEY=/Users/carlosvigo/.ssh/etherId.carlos.vigo_key.pem
+export ECS_CLI_CERT=/Users/carlosvigo/.ssh/etherId.carlos.vigo_cert.pem
 
 #drivers DB2
 if [ -f '/Applications/dsdriver/db2profile' ]; then source '/Applications/dsdriver/db2profile'; fi
