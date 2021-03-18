@@ -5,14 +5,14 @@
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
 
+export TERM="xterm-256color"
+
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
 # Customize to your needs...
-<<<<<<< Updated upstream
-=======
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
@@ -63,15 +63,14 @@ unsetopt  share_history
 setopt    incappendhistory  #Immediately append to the history file, not just when a term is killed
 
 export HH_CONFIG=hicolor        # get more colors
-bindkey -s "\C-r" "\eqhh\n"     # bind hh to Ctrl-r (for Vi mode check doc)
 
 export CLICOLOR=1
 export LSCOLORS=ExFxCxDxBxegedabagacad
 alias ls="ls --color=always"
 
 # Ether Console stuff
-export ECS_CLI_KEY=/Users/carlosvigo/.ssh/e019682-work_key.pem 
-export ECS_CLI_CERT=/Users/carlosvigo/.ssh/e019682-work_cert.pem
+export ECS_CLI_KEY=/Users/carlosvigo/.ssh/e019682-live_key.pem 
+export ECS_CLI_CERT=/Users/carlosvigo/.ssh/e019682-live_cert.pem
 
 #drivers DB2
 if [ -f '/Applications/dsdriver/db2profile' ]; then source '/Applications/dsdriver/db2profile'; fi
@@ -86,4 +85,10 @@ export GOPRIVATE='*.bbva.com,*.igrupobbva'
 
 #Android Tools
 export PATH=$HOME/developer/android/:$PATH
->>>>>>> Stashed changes
+
+# HSTR configuration - add this to ~/.zshrc
+alias hh=hstr                    # hh to be alias for hstr
+setopt histignorespace           # skip cmds w/ leading space from history
+export HSTR_CONFIG=hicolor       # get more colors
+bindkey -s "\C-r" "\C-a hstr -- \C-j"     # bind hstr to Ctrl-r (for Vi mode check doc)
+
