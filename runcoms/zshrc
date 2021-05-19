@@ -49,6 +49,7 @@ fpath=(/usr/local/share/zsh-completions $fpath)
 
 #Titan CLI autocomplete
 source ~/.titan_cli/_titan_cli
+if [ -f '~/.titan_cli/_titan_cli' ]; then source '~/.titan_cli/_titan_cli'; fi
 alias tc=titan_cli
 
 #Set Java default version
