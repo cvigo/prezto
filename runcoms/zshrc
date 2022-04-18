@@ -18,10 +18,10 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 
 
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/carlosvigo/developer/google-cloud-sdk/path.zsh.inc' ]; then source '/Users/carlosvigo/developer/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f "${HOME}/developer/google-cloud-sdk/path.zsh.inc" ]; then source "${HOME}/developer/google-cloud-sdk/path.zsh.inc"; fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f '/Users/carlosvigo/developer/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/carlosvigo/developer/google-cloud-sdk/completion.zsh.inc'; fi
+if [ -f "${HOME}/developer/google-cloud-sdk/completion.zsh.inc" ]; then source "${HOME}/developer/google-cloud-sdk/completion.zsh.inc"; fi
 export GOPATH=$HOME/developer/go
 export PATH=$GOPATH/bin:$PATH
 
@@ -50,8 +50,19 @@ export PATH=$PATH:~/developer/BBVA/connectors/titan_cli/bin
 #zsh-completion installed by Homebrew
 fpath=(/usr/local/share/zsh-completions $fpath)
 
+#User zsh-completion script
+fpath=($HOME/.zsh_completions $fpath)
+
 #Titan CLI autocomplete
 if [ -f "$HOME/.titan_cli/_titan_cli" ]; then source "$HOME/.titan_cli/_titan_cli"; fi
+
+#DB2 Tester autocomplete
+if [ -f "$HOME/.zsh_completions/_dbconntest" ]; then
+  source "$HOME/.zsh_completions/_dbconntest"; 
+  compdef _dbconntest dbconntest;
+fi
+
+
 alias tc=titan_cli
 
 #Set Java default version
@@ -72,8 +83,9 @@ export LSCOLORS=ExFxCxDxBxegedabagacad
 alias ls="ls --color=always"
 
 # Ether Console stuff
-export ECS_CLI_KEY=/Users/carlosvigo/.ssh/e019682-live_key.pem 
-export ECS_CLI_CERT=/Users/carlosvigo/.ssh/e019682-live_cert.pem
+export PATH=$PATH:$HOME/ecs-cli/
+export ECS_CLI_KEY=$HOME/.ssh/e019682-live_key.pem 
+export ECS_CLI_CERT=$HOME/.ssh/e019682-live_cert.pem
 
 #drivers DB2
 if [ -f '/Applications/dsdriver/db2profile' ]; then source '/Applications/dsdriver/db2profile'; fi
@@ -95,3 +107,33 @@ setopt histignorespace           # skip cmds w/ leading space from history
 export HSTR_CONFIG=hicolor       # get more colors
 bindkey -s "\C-r" "\C-a hstr -- \C-j"     # bind hstr to Ctrl-r (for Vi mode check doc)
 
+#TITAN Environment
+export TITAN_DATASRV=localhost.titan.work.es.nextgen.igrupobbva:50050
+#export TITAN_DATASRV=octa-sql.titan.work.es.nextgen.igrupobbva:50050
+export TITAN_INSTANCE=db2-octa
+export TITAN_DB=XTRE
+export TITAN_CAFILE=/Users/carlosvigo/developer/BBVA/connectors/certs/global_root_issuinginfra_ca_work.pem
+export TITAN_CERT=/Users/carlosvigo/developer/BBVA/connectors/certs/titan_client_infra_cert.pem
+export TITAN_KEY=/Users/carlosvigo/developer/BBVA/connectors/certs/titan_client_infra_handled.key.pem
+export TITAN_FILE=/Users/carlosvigo/developer/BBVA/connectors/db2_stressTest/queries/select_eñes.sql
+export TITAN_IMPERSONATE_USER=XTRE
+export TITAN_IMPERSONATE_HEADER=x-titan-security-runas-user
+export TITAN_LOG_DIR=/Users/carlosvigo/developer/BBVA/connectors/db2_stressTest/logs
+export TITAN_WRITEJSONRESULTS=false
+export TITAN_WRITESEMAASRESULTS=false
+export TITAN_NS=ether.titan.sql
+export TITAN_MRID=work_titan_server
+export TITAN_TLS=mutual
+export TITAN_ISOLATION=readwrite
+export TITAN_INTERVAL=1s
+export TITAN_TIMEOUT=20m
+export TITAN_WORKERS=200
+export TITAN_REUSECONNECTIONS=false
+export TITAN_IT=1
+export TITAN_DURATION=5m
+export TITAN_LB=round_robin_affinity
+export TITAN_DNS=default
+export TITAN_TXNSIZE=1
+export TITAN_LOGLEVEL=error
+export TITAN_NOPROGRESSBAR=false
+export TITAN_VERBOSE=false
