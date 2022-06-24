@@ -7,15 +7,33 @@
 
 export TERM="xterm-256color"
 
+# Handle Mac platforms for Homebrew
+CPU=$(uname -p)
+if [[ "$CPU" == "arm" ]]; then
+  export HOMEBREW_ROOT=/opt/homebrew
+  alias oldbrew=/usr/local/bin/brew
+else
+  export HOMEBREW_ROOT=/usr/local
+fi
+
+alias nano=${HOMEBREW_ROOT}/bin/nano
+
+#zsh-completion installed by Intel Homebrew
+fpath=(${HOMEBREW_ROOT}/share/zsh-completions $fpath)
+
+#zsh-completion installed by ARM Homebrew
+fpath=(${HOMEBREW_ROOT}/completions/zsh $fpath)
+
+#User zsh-completion script
+fpath=($HOME/.zsh_completions $fpath)
+
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
 # Customize to your needs...
-
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f "${HOME}/developer/google-cloud-sdk/path.zsh.inc" ]; then source "${HOME}/developer/google-cloud-sdk/path.zsh.inc"; fi
@@ -25,52 +43,45 @@ if [ -f "${HOME}/developer/google-cloud-sdk/completion.zsh.inc" ]; then source "
 export GOPATH=$HOME/developer/go
 export PATH=$GOPATH/bin:$PATH
 
-#oracle client  
-export PATH=~/developer/oracle_instant_client_12_2:$PATH
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/developer/oracle.instant.client
-export ORACLE_HOME=~/developer/oracle.instant.client
-export TNS_ADMIN=$ORACLE_HOME/network/admin/
+#ORACLE Client  
+# CVV Mac
+if [ -d "${HOME}/developer/oracle.instant.client" ] ; then
+  export ORACLE_HOME=${HOME}/developer/oracle.instant.client
+  export TNS_ADMIN=${ORACLE_HOME}/network/admin/
+fi
+#Titan Physics Servers
+if [ -d "/usr/lib/oracle/19.3/client64" ] ; then 
+  export ORACLE_HOME=/usr/lib/oracle/19.3/client64
+  export TNS_ADMIN=${ORACLE_HOME}/lib/network/admin/
+fi  
 
+if [ -s ${ORACLE_HOME} ]; then
+  export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${ORACLE_HOME}
+fi
 
 #maven shit
-export PATH=$PATH:~/developer/apache-maven-3.5.2/bin
+export PATH=$PATH:${HOME}/developer/apache-maven-3.5.2/bin
 
 #some useful scripts
-export PATH=$PATH:~/developer/linux-scripts
+export PATH=$PATH:${HOME}/developer/linux-scripts
 
 #jmeter 
 export PATH=$PATH:/Applications/apache-jmeter-4.0/bin/
 
 # coreutils with standard names (not starting by 'g')
-export PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
+export PATH=${HOMEBREW_ROOT}/opt/coreutils/libexec/gnubin:$PATH
 
 #titan_cli
-export PATH=$PATH:~/developer/BBVA/connectors/titan_cli/bin
-
-#zsh-completion installed by Homebrew
-fpath=(/usr/local/share/zsh-completions $fpath)
-
-#User zsh-completion script
-fpath=($HOME/.zsh_completions $fpath)
-
-#Titan CLI autocomplete
-if [ -f "$HOME/.titan_cli/_titan_cli" ]; then source "$HOME/.titan_cli/_titan_cli"; fi
-
-#DB2 Tester autocomplete
-if [ -f "$HOME/.zsh_completions/_dbconntest" ]; then
-  source "$HOME/.zsh_completions/_dbconntest"; 
-  compdef _dbconntest dbconntest;
-fi
-
+export PATH=$PATH:${HOME}/developer/BBVA/connectors/titan_cli/bin
 
 alias tc=titan_cli
 
 #Set Java default version
-export JAVA_HOME='/usr/libexec/java_home -v 1.8'
+export JAVA_HOME=$(/usr/libexec/java_home -v 17)
 
 
-# add this configuration to ~/.zshrc
-export HISTFILE=~/.zsh_history  # ensure history file visibility
+# add this configuration to ${HOME}/.zshrc
+export HISTFILE=${HOME}/.zsh_history  # ensure history file visibility
 setopt    appendhistory     #Append history to the history file (no overwriting)
 setopt    no_share_history
 unsetopt  share_history
@@ -101,11 +112,24 @@ export GOPRIVATE='*.bbva.com,*.igrupobbva'
 #Android Tools
 export PATH=$HOME/developer/android/:$PATH
 
-# HSTR configuration - add this to ~/.zshrc
+#Openshift CLI
+export PATH=$HOME/openshift_cli:$PATH
+# Workaround https://access.redhat.com/solutions/6896731
+# Load the oc completion code for zsh[1] into the current shell
+source <(oc completion zsh | sed -e 's/kubectl/oc/g')
+# Set the oc completion code for zsh[1] to autoload on startup
+oc completion zsh | sed -e 's/kubectl/oc/g' > "${fpath[1]}/_oc"
+
+# HSTR configuration - add this to ${HOME}/.zshrc
 alias hh=hstr                    # hh to be alias for hstr
 setopt histignorespace           # skip cmds w/ leading space from history
 export HSTR_CONFIG=hicolor       # get more colors
-bindkey -s "\C-r" "\C-a hstr -- \C-j"     # bind hstr to Ctrl-r (for Vi mode check doc)
+bindkey -s "\C-r" "\C-a hstr -- \C-j"     # bind hstr to Ctrl-r (for Vi mode check doc
+
+#Physics mounts
+export PATH=$HOME/developer/mounts/:$PATH
+compdef mountf=ping
+compdef sshp=ping
 
 #TITAN Environment
 export TITAN_DATASRV=localhost.titan.work.es.nextgen.igrupobbva:50050
@@ -137,3 +161,11 @@ export TITAN_TXNSIZE=1
 export TITAN_LOGLEVEL=error
 export TITAN_NOPROGRESSBAR=false
 export TITAN_VERBOSE=false
+
+
+# Shell completion stuff
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh-completions:$(brew --prefix)/share/zsh/site-functions:$FPATH
+fi
+autoload -Uz compinit
+compinit -i
