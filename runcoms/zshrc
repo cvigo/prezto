@@ -164,6 +164,8 @@ export TITAN_TXNSIZE=1
 export TITAN_LOGLEVEL=error
 export TITAN_NOPROGRESSBAR=false
 export TITAN_VERBOSE=false
+export TITAN_SENDHEADER=x-rho-tracecontext:{\"caller_runtime\":\"lra\",\"caller_id\":\"thecaller_id\",\"caller_id2\":\"thecaller_id2\",\"aap\":\"theaap\"}
+
 
 
 # Shell completion stuff
@@ -178,3 +180,6 @@ compinit -i
 # export http_proxy=zsgwtc1.igrupobbva:80
 # export https_proxy=zsgwtc1.igrupobbva:80
 export NO_PROXY=*.igrupobbva
+
+alias pip=/opt/homebrew/bin/pip3
+alias python=/opt/homebrew/bin/python3
