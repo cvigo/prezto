@@ -164,7 +164,7 @@ export TITAN_TXNSIZE=1
 export TITAN_LOGLEVEL=error
 export TITAN_NOPROGRESSBAR=false
 export TITAN_VERBOSE=false
-export TITAN_SENDHEADER=x-rho-tracecontext:{\"caller_runtime\":\"lra\",\"caller_id\":\"thecaller_id\",\"caller_id2\":\"thecaller_id2\",\"aap\":\"theaap\"}
+export TITAN_SENDHEADER='x-rho-tracecontext:{\"caller_runtime\":\"lra\",\"caller_id\":\"thecaller_id\",\"caller_id2\":\"thecaller_id2\",\"aap\":\"theaap\"}'
 
 
 
@@ -183,3 +183,10 @@ export NO_PROXY=*.igrupobbva
 
 alias pip=/opt/homebrew/bin/pip3
 alias python=/opt/homebrew/bin/python3
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+# Created by `pipx` on 2024-11-06 11:24:41
+export PATH="$PATH:/Users/carlosvigo/.local/bin"
