@@ -47,8 +47,8 @@ export PATH=$GOPATH/bin:$PATH
 
 #ORACLE Client  
 # CVV Mac
-if [ -d "${HOME}/developer/oracle.instant.client" ] ; then
-  export ORACLE_HOME=${HOME}/developer/oracle.instant.client
+if [ -d "${HOME}/developer/oracle.instant.client.v23.3.0.arm" ] ; then
+  export ORACLE_HOME=${HOME}/developer/oracle.instant.client.v23.3.0.arm
   export TNS_ADMIN=${ORACLE_HOME}/network/admin/
 fi
 #Titan Physics Servers
@@ -75,9 +75,10 @@ export PATH=${HOMEBREW_ROOT}/opt/coreutils/libexec/gnubin:$PATH
 
 #titan_cli
 export PATH=$PATH:${HOME}/developer/BBVA/connectors/titan/sqlcli/go/cli/build/bin/
-
 alias tc=titan_cli_Darwin
 compdef titan_cli_Darwin=titan_cli
+export PATH=$PATH:${HOME}/developer/BBVA/connectors/dbconntest/build/
+
 
 
 #Set Java default version
@@ -107,7 +108,6 @@ export DB2HOME=/Applications/dsdriver
 export IBM_DB_HOME=$DB2HOME
 export CGO_CFLAGS=-I$DB2HOME/include
 export CGO_LDFLAGS=-L$DB2HOME/lib 
-export DYLD_LIBRARY_PATH=$DB2HOME/lib:$DYLD_LIBRARY_PATH
 export LD_LIBRARY_PATH=$DB2HOME/lib:$LD_LIBRARY_PATH
 
 #para que go mod no vaya por el proxy de Google
@@ -190,3 +190,18 @@ export SDKMAN_DIR="$HOME/.sdkman"
 
 # Created by `pipx` on 2024-11-06 11:24:41
 export PATH="$PATH:/Users/carlosvigo/.local/bin"
+
+# Sebasshtian acceess to AWS
+# https://platform.bbva.com/aws/documentation/1r_DrONy0VV7dSda2wg6Ft5_BDPsBx2_XdxoKlErpjAk/operation/aws-ec2/instance-administration
+alias awscertgen="VAULT_ADDR=https://vault.meigas.live.es.ether.igrupobbva sebas generate-cert -pub-file ~/.ssh/id_rsa.pub -cert-file ~/.ssh/id_rsa-cert.pub"
+
+# Gemini API Key for gemini-cli
+export GOOGLE_CLOUD_PROJECT="gen-lang-client-0747494970"
+export GEMINI_API_KEY="AIzaSyDjvFLrPHomuJS5a9buTjdyhfa7V0NCuVo"
+
+# Boundary (sebasshtian replacement)
+export BOUNDARY_ADDR="https://api.boundary.live.global.nextgen.igrupobbva"
+source "$HOME/.boundary/boundary_alias.sh"
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/local/bin/boundary boundary
